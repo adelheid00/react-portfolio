@@ -11,7 +11,7 @@ const HomePageComponent = () => {
         sx={{
           minHeight: "100vh",
           width: "100vw",
-          bgcolor: "#162456",
+          bgcolor: "#262933",
           p: 3,
           display: "flex",
           flexDirection: "column",

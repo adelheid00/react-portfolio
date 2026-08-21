@@ -11,10 +11,12 @@ import {
   Toolbar,
 } from "@mui/material";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const NavigationBarComponent = () => {
   const [open, setOpen] = useState(false);
-  const drawerWidth = 240; // You can adjust this width
+  const drawerWidth = 240;
+  const listItems: string[] = ["Home", "About", "Projects", "Contact"];
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -25,43 +27,46 @@ const NavigationBarComponent = () => {
 
   return (
     <div>
-      const drawerWidth = 240; // You can adjust this width
       <AppBar
         position="fixed"
-        sx={{
-          transition: "margin 0.3s ease, width 0.3s ease",
-          ...(open && {
-            marginLeft: drawerWidth,
-            width: `calc(100% - ${drawerWidth}px)`,
-          }),
-        }}
+        className={`transition-[margin,width] duration-300 ease-in-out ${
+          open ? `ml-[${drawerWidth}px] w-[calc(100%-${drawerWidth}px)]` : ""
+        }`}
       >
-        <Toolbar className="bg-blue-950">
+        <Toolbar className="bg-blue-950 flex">
           <IconButton
             edge="start"
             color="inherit"
             aria-label="menu"
             onClick={handleDrawerOpen}
-            sx={{ mr: 2 }}
+            className="mr-2"
           >
             <MenuIcon />
           </IconButton>
-          <h6>Sample NavBar</h6>
+
+          {/* Wrapper to push list to the right */}
+          <div className="flex flex-grow justify-end">
+            <List className="flex flex-row gap-2">
+              {listItems.map((text) => (
+                <ListItem
+                  key={text}
+                  className="rounded text-white px-2 py-1"
+                  component={Link}
+                  to={`/${text.toLowerCase()}`} // ✅ routes to /home, /about, /projects, /contact
+                >
+                  <ListItemText primary={text} />
+                </ListItem>
+              ))}
+            </List>
+          </div>
         </Toolbar>
       </AppBar>
+
       <Drawer
         variant="persistent"
         anchor="left"
         open={open}
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: drawerWidth,
-            boxSizing: "border-box",
-            backgroundColor: "#162456"
-          },
-        }}
+        className="w-240 shrink-0 [&_.MuiDrawer-paper]:w-240 [&_.MuiDrawer-paper]:box-border [&_.MuiDrawer-paper]:bg-primary-dark"
       >
         <div className="bg-blue-950">
           <IconButton onClick={handleDrawerClose}>
@@ -70,17 +75,11 @@ const NavigationBarComponent = () => {
         </div>
         <Divider />
         <List>
-          {["Home", "About", "Projects", "Contact"].map((text) => (
+          {listItems.map((text) => (
             <ListItem
               component="button"
               key={text}
-              className="bg-blue-950"
-              sx={{
-                mb: 2,
-                backgroundColor: "#162456",
-                borderRadius: 1,
-                color: "white"
-              }}
+              className="mb-2 bg-[#262933] rounded text-white"
             >
               <ListItemText primary={text} />
             </ListItem>
