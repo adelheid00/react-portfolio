@@ -1,12 +1,10 @@
-import HomePageComponent from './components/home-page-component/HomePageComponent'
+import AppRoutes from "./routes/app-routes";
 function App() {
-
   return (
     <>
-    <HomePageComponent />
+      <AppRoutes />
     </>
-    
-  )
+  );
 }
 
-export default App
+export default App;
